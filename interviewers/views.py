@@ -4,8 +4,7 @@ from candidates.models import CandidateProfile
 from django.contrib.auth.views import LoginView
 from .forms import InterviewerSignUpForm
 from django.urls import reverse_lazy
-from .utils import generate_interview_questions  # Import the utility function
-from .utils import schedule_meeting  # Utility function for Zoom API
+from .utils import generate_interview_questions, schedule_meeting, transcribe_audio
 from .models import InterviewerProfile
 
 class InterviewerLoginView(LoginView):
@@ -34,29 +33,29 @@ def interviewer_signup(request):
     else:
         form = InterviewerSignUpForm()
     return render(request, 'interviewers/signup.html', {'form': form})
-
+import os
+from django.core.files.storage import default_storage
+from django.core.files.base import ContentFile
 
 @login_required
 def interviewer_dashboard(request):
     resumes = CandidateProfile.objects.exclude(resume__isnull=True).exclude(resume__exact='')
     questions = None
     meeting_link = None
+    evaluation_reports = {}
 
-    # Get the interviewer's profile
     interviewer_profile, created = InterviewerProfile.objects.get_or_create(user=request.user)
 
     if request.method == 'POST':
+        resume_id = request.POST.get('resume_id')
+        candidate = CandidateProfile.objects.get(id=resume_id)
+
         if 'generate_questions' in request.POST:
-            resume_id = request.POST.get('resume_id')
-            resume = CandidateProfile.objects.get(id=resume_id)
-            questions = generate_interview_questions(resume.resume.path)
+            questions = generate_interview_questions(candidate.resume.path)
 
         elif 'schedule_meeting' in request.POST:
-            resume_id = request.POST.get('resume_id')
-            candidate = CandidateProfile.objects.get(id=resume_id)
             start_time = request.POST.get('start_time')
 
-            # Schedule the meeting and replace old meeting link
             new_meeting_link = schedule_meeting(
                 topic=f"Interview with {candidate.user.username}",
                 start_time=start_time,
@@ -66,15 +65,26 @@ def interviewer_dashboard(request):
             )
 
             if new_meeting_link:
-                # ✅ Update candidate's meeting link (overwrite old one)
                 candidate.meeting_link = new_meeting_link
                 candidate.save()
-
-                # ✅ Update meeting_link variable to display on dashboard
                 meeting_link = new_meeting_link
+
+        elif 'process_audio' in request.POST and 'audio_file' in request.FILES:
+            audio_file = request.FILES['audio_file']
+
+            # ✅ Save the uploaded file temporarily
+            audio_path = f"media/uploads/{audio_file.name}"
+            path = default_storage.save(audio_path, ContentFile(audio_file.read()))
+
+            # ✅ Transcribe the audio using the saved file path
+            evaluation_reports[resume_id] = transcribe_audio(default_storage.path(path))
+
+            # ✅ Optionally, delete the file after processing (uncomment to enable cleanup)
+            # default_storage.delete(path)
 
     return render(request, 'interviewers/dashboard.html', {
         'resumes': resumes,
         'questions': questions,
-        'meeting_link': meeting_link
+        'meeting_link': meeting_link,
+        'evaluation_reports': evaluation_reports
     })

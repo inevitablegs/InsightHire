@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload Interview Recording</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 flex items-center justify-center min-h-screen p-4">
+    <div class="bg-white shadow-lg rounded-lg p-6 max-w-lg w-full">
+        <h1 class="text-2xl font-bold text-gray-800 mb-4">Upload Interview Recording</h1>
+        <p class="text-gray-600 mb-4">Please upload your interview recording in <strong>M4A format</strong> for analysis.</p>
+
+        <form method="POST" enctype="multipart/form-data" class="space-y-4">
+            {% csrf_token %}
+
+            <div>
+                <label class="block text-gray-700 font-medium mb-1">Select an M4A File:</label>
+                <input type="file" name="audio_file" accept=".m4a" required 
+                       class="w-full border border-gray-300 px-3 py-2 rounded-md focus:border-blue-500 focus:ring-1 focus:ring-blue-500">
+            </div>
+
+            <button type="submit" class="w-full bg-blue-600 text-white py-2 rounded-md font-medium hover:bg-blue-700 transition">
+                Analyze Interview
+            </button>
+        </form>
+    </div>
+</body>
+</html>

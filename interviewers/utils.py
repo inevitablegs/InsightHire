@@ -151,3 +151,56 @@ def schedule_meeting(topic, start_time, zoom_account_id, zoom_client_id, zoom_cl
     else:
         print("Error scheduling meeting:", response.text)
         return None
+    
+
+
+
+
+def transcribe_audio(audio_file_path):
+    """Transcribes an audio file and analyzes the interview using LLaMA."""
+    
+    # Initialize Groq Client
+    client = Groq(api_key=os.environ.get("GROQ_API_KEY"))
+
+    # Step 1: Transcribe the Audio
+    try:
+        with open(audio_file_path, "rb") as audio_file:
+            transcription = client.audio.transcriptions.create(
+                model="distil-whisper-large-v3-en",
+                file=audio_file,
+                response_format="text"
+            ).strip()
+    except Exception as e:
+        return f"Error transcribing audio: {e}"
+
+    # Step 2: Analyze the Interview using LLaMA
+    llama_prompt = f"""
+You are an AI-powered interview evaluator assisting the interviewer in assessing a candidate's responses.  
+The following is an automatically transcribed interview transcript, with raw and unprocessed text.  
+Your task is to extract key insights, assess the quality of responses, and provide a structured evaluation based on the given criteria.
+and also provide asked important question and candidate's answer. 
+
+**Interview Transcript (raw):**  
+{transcription}  
+
+**Evaluation Criteria:**  
+1. **Confidence & Delivery:** Assess whether the candidate speaks with confidence, assurance, and clarity. Explain why you believe they were (or were not) confident based on tone, hesitation, or assertiveness.  
+2. **Relevance & Accuracy:** Evaluate whether the candidate’s responses align with the question. Provide reasons if their response was off-topic, partially correct, or completely accurate.  
+3. **Coherence & Logical Flow:** Determine if the candidate’s thoughts are structured and make sense. Justify this based on their ability to present ideas sequentially and logically.  
+4. **Overall Impression:** Provide a qualitative summary of the candidate’s performance, supported by specific examples from their responses.  
+5. **Key Observations:** Highlight any notable strengths or weaknesses, explaining why they stood out.  
+
+Please format your response in a detailed manner. Also, this is interviewer-tailored, so do not provide recommendations for the candidate.  
+
+"""
+
+    try:
+        response = client.chat.completions.create(
+            model="llama-3.3-70b-versatile",
+            messages=[{"role": "user", "content": llama_prompt}],
+            temperature=0.7,
+            max_tokens=4096
+        )
+        return response.choices[0].message.content.strip()
+    except Exception as e:
+        return f"Error generating interview analysis: {e}"

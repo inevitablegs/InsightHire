@@ -3,304 +3,753 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Candidate Dashboard</title>
+    <title>Candidate Dashboard | InsightHire</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/js/all.min.js"></script>
     <style>
-        /* Global styles and CSS reset */
+        /* Reset and Base Styles */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
         
         body {
-            background: linear-gradient(135deg, #f5f7fa 0%, #e4eaf4 100%);
+            background: linear-gradient(135deg, #f0f4ff 0%, #e6eeff 100%);
+            color: #333;
             min-height: 100vh;
             display: flex;
             flex-direction: column;
-            align-items: center;
-            padding: 40px 16px;
-            color: #333;
-            line-height: 1.6;
         }
         
+        /* Navigation */
+        nav {
+            background-color: #0f766e; /* Deeper teal color */
+            color: white;
+            padding: 1rem 0;
+            box-shadow: 0 4px 12px rgba(15, 118, 110, 0.2);
+            position: relative;
+            font-family: 'Poppins', sans-serif; /* Modern, clean font */
+        }
+
+        .nav-container {
+            width: 100%;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            color: white;
+            z-index: 5;
+        }
+
+        .logo-text {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-left: 0.5rem;
+            letter-spacing: 0.5px; /* Improved spacing */
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            margin-left: 1.5rem;
+            transition: all 0.3s;
+            font-weight: 500;
+            font-size: 0.95rem;
+            letter-spacing: 0.3px;
+            padding: 0.5rem 0.75rem;
+            border-radius: 4px;
+        }
+
+        .nav-links a:hover {
+            color: #ecfdf5; /* Light mint color on hover */
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .profile-btn {
+            background-color: #f97316; /* Orange accent */
+            padding: 0.5rem 1.25rem !important;
+            border-radius: 6px !important;
+            font-weight: 600 !important;
+            transition: all 0.3s;
+        }
+
+        .profile-btn:hover {
+            background-color: #ea580c !important; /* Darker orange on hover */
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(249, 115, 22, 0.3);
+        }
+        
+        /* Hamburger Menu */
+        .hamburger {
+            display: none;
+            cursor: pointer;
+            width: 30px;
+            height: 21px;
+            position: relative;
+            z-index: 5;
+        }
+        
+        .hamburger span {
+            display: block;
+            position: absolute;
+            height: 3px;
+            width: 100%;
+            background: white;
+            border-radius: 3px;
+            opacity: 1;
+            left: 0;
+            transform: rotate(0deg);
+            transition: .25s ease-in-out;
+        }
+        
+        .hamburger span:nth-child(1) {
+            top: 0px;
+        }
+        
+        .hamburger span:nth-child(2) {
+            top: 9px;
+        }
+        
+        .hamburger span:nth-child(3) {
+            top: 18px;
+        }
+        
+        .hamburger.open span:nth-child(1) {
+            top: 9px;
+            transform: rotate(135deg);
+        }
+        
+        .hamburger.open span:nth-child(2) {
+            opacity: 0;
+            left: -60px;
+        }
+        
+        .hamburger.open span:nth-child(3) {
+            top: 9px;
+            transform: rotate(-135deg);
+        }
+        
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+            max-width: 90%;
+            margin: 0 auto;
+            width: 100%;
+        }
+        
+        /* Dashboard Container */
         .container {
             background: white;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
-            border-radius: 12px;
-            padding: 40px;
-            max-width: 640px;
+            border-radius: 0.75rem;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15);
             width: 100%;
-            transition: transform 0.3s ease;
+            max-width: 100%;
+            min-height: 600px;
+            display: flex;
+            overflow: hidden;
+            margin: 2rem 0;
         }
         
-        .container:hover {
-            transform: translateY(-5px);
+        /* Left Sidebar */
+        .sidebar {
+            background-color: rgb(15, 118, 110); /* Changed to green theme */
+            width: 25%;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            color: white;
         }
         
-        h1 {
-            font-size: 28px;
-            font-weight: 700;
+        .user-info {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+        
+        .user-avatar {
+            width: 100px;
+            height: 100px;
+            background-color: #f97316;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 1rem;
+            font-size: 2.5rem;
+            color: white;
+        }
+        
+        .user-name {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+        }
+        
+        .user-role {
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+        
+        .nav-menu {
+            list-style: none;
+            margin-top: 1rem;
+        }
+        
+        .nav-menu li {
+            margin-bottom: 0.5rem;
+        }
+        
+        .nav-menu a {
+            display: flex;
+            align-items: center;
+            padding: 0.75rem 1rem;
+            color: white;
+            text-decoration: none;
+            border-radius: 0.5rem;
+            transition: all 0.3s;
+        }
+        
+        .nav-menu a:hover, .nav-menu a.active {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+        
+        .nav-menu a i {
+            margin-right: 0.75rem;
+            width: 20px;
             text-align: center;
-            color: #1f2937;
-            margin-bottom: 32px;
-            position: relative;
-            padding-bottom: 12px;
         }
         
-        h1::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 60px;
-            height: 3px;
-            background: #2563eb;
-            border-radius: 3px;
+        /* Main Dashboard Content */
+        .dashboard-content {
+            width: 75%;
+            padding: 2rem;
+            overflow-y: auto;
+        }
+        
+        .dashboard-header {
+            margin-bottom: 2rem;
+        }
+        
+        .dashboard-header h1 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #16a34a; /* Dark green for headings */
+            margin-bottom: 0.5rem;
+        }
+        
+        .dashboard-header p {
+            color: #4B5563;
+        }
+        
+        .card {
+            background: white;
+            border-radius: 0.75rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            border: 1px solid #e5e7eb;
+        }
+        
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 1px solid #e5e7eb;
+        }
+        
+        .card-header h2 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #16a34a;
+            display: flex;
+            align-items: center;
+        }
+        
+        .card-header h2 i {
+            margin-right: 0.75rem;
+        }
+        
+        .resume-upload {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .form-group {
+            margin-bottom: 1rem;
         }
         
         label {
             display: block;
-            font-size: 14px;
-            font-weight: 600;
-            color: #4b5563;
-            margin-bottom: 8px;
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: #374151;
+            margin-bottom: 0.5rem;
         }
         
         input[type="file"] {
             width: 100%;
-            padding: 12px;
-            border: 1px solid #e5e7eb;
-            border-radius: 8px;
-            outline: none;
-            transition: border 0.2s, box-shadow 0.2s;
-            background: #f9fafb;
-            margin-bottom: 20px;
-        }
-        
-        input[type="file"]:hover {
-            border-color: #cbd5e1;
+            padding: 0.75rem;
+            border: 1px solid #d1d5db;
+            border-radius: 0.5rem;
+            background-color: #f9fafb;
         }
         
         input[type="file"]:focus {
-            border-color: #2563eb;
-            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+            outline: none;
+            border-color: #22c55e;
+            box-shadow: 0 0 0 1px #22c55e;
         }
         
-        button {
-            width: 100%;
-            background: linear-gradient(to right, #2563eb, #3b82f6);
-            color: white;
-            padding: 12px;
-            border: none;
-            border-radius: 8px;
-            font-weight: 600;
-            font-size: 16px;
-            cursor: pointer;
-            transition: all 0.2s;
-            display: flex;
+        .btn {
+            display: inline-flex;
             align-items: center;
             justify-content: center;
-            box-shadow: 0 4px 6px rgba(37, 99, 235, 0.2);
+            padding: 0.75rem 1.5rem;
+            background-color: #22c55e;
+            color: white;
+            border: none;
+            border-radius: 0.5rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s;
         }
         
-        button:hover {
-            background: linear-gradient(to right, #1d4ed8, #2563eb);
-            transform: translateY(-2px);
-            box-shadow: 0 6px 8px rgba(37, 99, 235, 0.25);
+        .btn i {
+            margin-right: 0.5rem;
         }
         
-        button:active {
-            transform: translateY(0);
+        .btn:hover {
+            background-color: #16a34a;
         }
         
-        .resume-status {
-            margin-top: 28px;
-            padding: 16px;
-            background: #ecfdf5;
-            color: #065f46;
-            border-radius: 8px;
+        .btn-secondary {
+            background-color: #f97316;
+        }
+        
+        .btn-secondary:hover {
+            background-color: #ea580c;
+        }
+        
+        .resume-info {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-            border-left: 4px solid #10b981;
+            padding: 1rem;
+            background-color: #f0fdf4;
+            border-radius: 0.5rem;
+            border-left: 4px solid #22c55e;
         }
         
-        .resume-status a {
-            color: #0d6efd;
-            font-weight: 600;
-            text-decoration: none;
-            padding: 6px 12px;
-            background: rgba(13, 110, 253, 0.1);
-            border-radius: 6px;
-            transition: all 0.2s;
+        .resume-info p {
             display: flex;
             align-items: center;
         }
         
-        .resume-status a:hover {
-            background: rgba(13, 110, 253, 0.15);
-            color: #0a58ca;
-            transform: translateY(-2px);
+        .resume-info i {
+            margin-right: 0.5rem;
+            color: #16a34a;
+        }
+        
+        .resume-info a {
+            color: #f97316;
+            text-decoration: none;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+        }
+        
+        .resume-info a i {
+            margin-right: 0.5rem;
+            color: #f97316;
         }
         
         .no-resume {
+            padding: 1.5rem;
             text-align: center;
             color: #6b7280;
-            margin: 16px 0;
-            padding: 20px;
-            background: #f9fafb;
-            border-radius: 8px;
+            background-color: #f9fafb;
+            border-radius: 0.5rem;
             border: 1px dashed #d1d5db;
-            font-style: italic;
-        }
-        
-        .interview-section {
-            margin-top: 40px;
-            padding-top: 32px;
-            border-top: 1px solid #e5e7eb;
-        }
-        
-        h2 {
-            font-size: 22px;
-            font-weight: 700;
-            color: #1f2937;
-            margin-bottom: 20px;
-            display: flex;
-            align-items: center;
-        }
-        
-        h2::before {
-            content: "\f03a";
-            font-family: "Font Awesome 5 Free";
-            font-weight: 900;
-            margin-right: 10px;
-            color: #2563eb;
         }
         
         .interview-info {
-            margin-top: 16px;
-            padding: 20px;
-            background: linear-gradient(to right, #dbeafe, #e0f2fe);
-            color: #1e40af;
-            border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+            padding: 1.5rem;
+            background-color: #eff6ff;
+            border-radius: 0.5rem;
             border-left: 4px solid #3b82f6;
         }
         
-        .interview-info a {
-            color: #1d4ed8;
+        .interview-info h3 {
+            font-size: 1.1rem;
             font-weight: 600;
-            text-decoration: none;
-            display: inline-block;
-            margin-top: 12px;
-            padding: 10px 16px;
-            background: rgba(59, 130, 246, 0.15);
-            border-radius: 8px;
-            transition: all 0.2s;
+            color: #1e40af;
+            margin-bottom: 0.5rem;
         }
         
-        .interview-info a:hover {
-            background: rgba(59, 130, 246, 0.25);
-            transform: translateY(-2px);
-            box-shadow: 0 4px 6px rgba(37, 99, 235, 0.1);
+        .interview-details {
+            margin: 1rem 0;
+        }
+        
+        .interview-detail {
+            display: flex;
+            align-items: center;
+            margin-bottom: 0.5rem;
+        }
+        
+        .interview-detail i {
+            width: 24px;
+            color: #3b82f6;
+            margin-right: 0.75rem;
+        }
+        
+        .interview-actions {
+            display: flex;
+            justify-content: flex-start;
+            margin-top: 1rem;
         }
         
         .no-interview {
+            padding: 1.5rem;
             text-align: center;
             color: #6b7280;
-            margin: 16px 0;
-            padding: 20px;
-            background: #f9fafb;
-            border-radius: 8px;
+            background-color: #f9fafb;
+            border-radius: 0.5rem;
             border: 1px dashed #d1d5db;
-            font-style: italic;
         }
         
-        /* Responsive adjustments */
-        @media (max-width: 640px) {
-            .container {
-                padding: 24px 20px;
-                margin: 0 8px;
+        /* Footer */
+        footer {
+            background-color: #0f766e; /* Matches nav background */
+            color: white;
+            padding: 2rem;
+            text-align: center;
+            margin-top: auto;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            margin: 1rem 0;
+        }
+
+        .footer-links a {
+            color: #dcfce7; /* Light green */
+            text-decoration: none;
+            margin: 0 1rem;
+            transition: color 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: #f97316;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .hamburger {
+                display: block;
             }
             
-            h1 {
-                font-size: 24px;
-                margin-bottom: 24px;
-            }
-            
-            .resume-status, .interview-info {
+            .nav-links {
+                position: fixed;
+                top: 0;
+                right: -100%;
+                width: 250px;
+                height: auto;
+                background-color: #0f766e;
                 flex-direction: column;
-                text-align: center;
+                align-items: flex-start;
+                padding: 80px 30px 30px;
+                transition: all 0.3s ease;
+                box-shadow: -5px 0 15px rgba(0, 0, 0, 0.1);
+                z-index: 4;
+                border-radius: 0 0 0 10px;
             }
             
-            .resume-status a, .interview-info a {
-                margin-top: 12px;
+            .nav-links.open {
+                right: 0;
             }
             
-            button {
-                padding: 10px;
-            }
-        }
-        
-        @media (max-width: 480px) {
-            body {
-                padding: 24px 12px;
+            .nav-links a {
+                margin: 0 0 1rem 0;
+                font-size: 1rem;
+                width: 100%;
             }
             
             .container {
-                padding: 20px 16px;
+                flex-direction: column;
+                height: auto;
             }
             
-            h1 {
-                font-size: 22px;
+            .sidebar {
+                width: 100%;
+                padding: 1.5rem;
             }
             
-            h2 {
-                font-size: 20px;
+            .user-info {
+                flex-direction: row;
+                align-items: center;
+                margin-bottom: 1rem;
+            }
+            
+            .user-avatar {
+                width: 60px;
+                height: 60px;
+                font-size: 1.5rem;
+                margin-bottom: 0;
+                margin-right: 1rem;
+            }
+            
+            .nav-menu {
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .nav-menu li {
+                margin: 0 0.5rem 0.5rem 0;
+            }
+            
+            .dashboard-content {
+                width: 100%;
+                padding: 1.5rem;
+            }
+            
+            .interview-actions {
+                flex-direction: column;
+            }
+            
+            .interview-actions .btn {
+                margin-bottom: 0.75rem;
+                width: 100%;
             }
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>Candidate Dashboard</h1>
-        <form method="post" enctype="multipart/form-data">
-            {% csrf_token %}
-            <div>
-                <label>Upload Resume</label>
-                <input type="file" name="{{ form.resume.name }}">
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-container">
+            <a href="/" class="logo">
+                <span class="logo-text">InsightHire</span>
+            </a>
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
             </div>
-            <button type="submit">
-                <i class="fas fa-upload" style="margin-right: 8px;"></i> Upload Resume
-            </button>
-        </form>
-        <div class="resume-status">
-            {% if candidate_profile.resume %}
-                <p>Your current resume:</p>
-                <a href="{{ candidate_profile.resume.url }}">
-                    <i class="fas fa-file-alt" style="margin-right: 6px;"></i> Download
-                </a>
-            {% else %}
-                <p class="no-resume">No resume uploaded yet.</p>
-            {% endif %}
+            <div class="nav-links">
+                <a href="/dashboard/" class="active">Dashboard</a>
+                <a href="/interviews/">Interviews</a>
+                <a href="/resources/">Resources</a>
+                <a href="/settings/" class="profile-btn">My Profile</a>
+            </div>
         </div>
-        <div class="interview-section">
-            <h2>Scheduled Interview</h2>
-            {% if candidate_profile.meeting_link %}
-                <div class="interview-info">
-                    <p>Your interview is scheduled. Join using the link below:</p>
-                    <a href="{{ candidate_profile.meeting_link }}" target="_blank">
-                        <i class="fas fa-video" style="margin-right: 6px;"></i> Join Meeting
-                    </a>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <div class="container">
+            <!-- Left Sidebar -->
+            <div class="sidebar">
+                <div class="user-info">
+                    <div class="user-avatar">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <div>
+                        <div class="user-name">John Doe</div>
+                        <div class="user-role">Software Developer</div>
+                    </div>
                 </div>
-            {% else %}
-                <p class="no-interview">No interview scheduled yet.</p>
-            {% endif %}
+                
+                <ul class="nav-menu">
+                    <li><a href="/dashboard/" class="active"><i class="fas fa-home"></i> Dashboard</a></li>
+                    <li><a href="/resume/"><i class="fas fa-file-alt"></i> Resume</a></li>
+                    <li><a href="/interviews/"><i class="fas fa-video"></i> Interviews</a></li>
+                    <li><a href="/feedback/"><i class="fas fa-comment-dots"></i> Feedback</a></li>
+                    <li><a href="/resources/"><i class="fas fa-book"></i> Resources</a></li>
+                    <li><a href="/settings/"><i class="fas fa-cog"></i> Settings</a></li>
+                </ul>
+                
+                <div class="footer-links" style="margin-top: auto; padding-top: 2rem;">
+                    <a href="/help/">Help</a> • 
+                    <a href="/privacy/">Privacy</a> • 
+                    <a href="/terms/">Terms</a>
+                </div>
+            </div>
+
+            <!-- Main Dashboard Content -->
+            <div class="dashboard-content">
+                <div class="dashboard-header">
+                    <h1>Welcome back, John!</h1>
+                    <p>Here's your current progress and upcoming interviews.</p>
+                </div>
+                
+                <!-- Resume Card -->
+                <div class="card">
+                    <div class="card-header">
+                        <h2><i class="fas fa-file-alt"></i> Resume</h2>
+                    </div>
+                    
+                    <form method="post" enctype="multipart/form-data" class="resume-upload">
+                        {% csrf_token %}
+                        <div class="form-group">
+                            <label for="resume">Upload or update your resume</label>
+                            <input type="file" id="resume" name="{{ form.resume.name }}">
+                        </div>
+                        <div>
+                            <button type="submit" class="btn">
+                                <i class="fas fa-upload"></i> Upload Resume
+                            </button>
+                        </div>
+                    </form>
+                    
+                    {% if candidate_profile.resume %}
+                    <div class="resume-info" style="margin-top: 1rem;">
+                        <p><i class="fas fa-check-circle"></i> Your resume is ready</p>
+                        <a href="{{ candidate_profile.resume.url }}">
+                            <i class="fas fa-download"></i> Download
+                        </a>
+                    </div>
+                    {% else %}
+                    <div class="no-resume" style="margin-top: 1rem;">
+                        <i class="fas fa-exclamation-circle" style="color: #9ca3af; font-size: 1.5rem; margin-bottom: 0.5rem;"></i>
+                        <p>You haven't uploaded a resume yet. Add your resume to start applying for positions.</p>
+                    </div>
+                    {% endif %}
+                </div>
+                
+                <!-- Interview Card -->
+                <div class="card">
+                    <div class="card-header">
+                        <h2><i class="fas fa-video"></i> Upcoming Interview</h2>
+                    </div>
+                    
+                    {% if candidate_profile.meeting_link %}
+                    <div class="interview-info">
+                        <h3>Virtual Interview with TechCorp</h3>
+                        
+                        <div class="interview-details">
+                            <div class="interview-detail">
+                                <i class="fas fa-calendar"></i>
+                                <span>March 5, 2025 at 10:30 AM</span>
+                            </div>
+                            <div class="interview-detail">
+                                <i class="fas fa-clock"></i>
+                                <span>60 minutes</span>
+                            </div>
+                            <div class="interview-detail">
+                                <i class="fas fa-user-tie"></i>
+                                <span>Interviewer: Sarah Johnson, Senior Engineer</span>
+                            </div>
+                        </div>
+                        
+                        <div class="interview-actions">
+                            <a href="{{ candidate_profile.meeting_link }}" class="btn" target="_blank">
+                                <i class="fas fa-video"></i> Join Interview
+                            </a>
+                            <a href="/prepare/1234/" class="btn btn-secondary" style="margin-left: 1rem;">
+                                <i class="fas fa-brain"></i> Prepare with AI
+                            </a>
+                        </div>
+                    </div>
+                    {% else %}
+                    <div class="no-interview">
+                        <i class="fas fa-calendar-times" style="color: #9ca3af; font-size: 1.5rem; margin-bottom: 0.5rem;"></i>
+                        <p>You don't have any interviews scheduled. Complete your profile to start receiving interview requests.</p>
+                    </div>
+                    {% endif %}
+                </div>
+                
+                <!-- Stats Card -->
+                <div class="card">
+                    <div class="card-header">
+                        <h2><i class="fas fa-chart-line"></i> Your Progress</h2>
+                    </div>
+                    
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem;">
+                        <div style="background-color: #ecfdf5; padding: 1rem; border-radius: 0.5rem; text-align: center;">
+                            <div style="font-size: 2rem; font-weight: 700; color: #16a34a;">85%</div>
+                            <div style="color: #374151;">Profile Completion</div>
+                        </div>
+                        <div style="background-color: #eff6ff; padding: 1rem; border-radius: 0.5rem; text-align: center;">
+                            <div style="font-size: 2rem; font-weight: 700; color: #3b82f6;">5</div>
+                            <div style="color: #374151;">Applications Sent</div>
+                        </div>
+                        <div style="background-color: #fff7ed; padding: 1rem; border-radius: 0.5rem; text-align: center;">
+                            <div style="font-size: 2rem; font-weight: 700; color: #f97316;">2</div>
+                            <div style="color: #374151;">Interviews Scheduled</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <p>&copy; 2025 InsightHire. All rights reserved.</p>
+            <div class="footer-links">
+                <a href="/privacy/">Privacy Policy</a>
+                <a href="/terms/">Terms of Service</a>
+                <a href="/contact/">Contact Us</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript for hamburger menu -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const hamburger = document.querySelector('.hamburger');
+            const navLinks = document.querySelector('.nav-links');
+            
+            // Toggle menu when hamburger is clicked
+            hamburger.addEventListener('click', function() {
+                hamburger.classList.toggle('open');
+                navLinks.classList.toggle('open');
+                
+                if (navLinks.classList.contains('open')) {
+                    document.body.style.overflow = 'hidden';
+                } else {
+                    document.body.style.overflow = '';
+                }
+            });
+            
+            // Close menu when clicking on a link
+            const links = document.querySelectorAll('.nav-links a');
+            links.forEach(link => {
+                link.addEventListener('click', function() {
+                    hamburger.classList.remove('open');
+                    navLinks.classList.remove('open');
+                    document.body.style.overflow = '';
+                });
+            });
+        });
+    </script>
 </body>
 </html>

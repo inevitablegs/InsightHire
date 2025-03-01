@@ -3,98 +3,272 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Interviewer Sign Up</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+    <title>Interviewer Sign Up | InsightHire</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/js/all.min.js"></script>
-</head>
-<body class="bg-gradient-to-br from-blue-50 to-indigo-100 h-screen flex items-center justify-center p-4">
-    
-    <div class="bg-white rounded-xl shadow-2xl w-full max-w-5xl h-[80vh] flex overflow-hidden">
-        <!-- Left Side - Welcome Banner -->
-        <div class="bg-indigo-600 w-1/3 p-8 flex flex-col justify-between text-white">
-            <div>
-                <h1 class="text-3xl font-bold mb-4">Join as an Interviewer</h1>
-                <p class="text-indigo-100">Connect with top candidates and help shape the future of talent.</p>
-            </div>
-
-            <div class="space-y-4">
-                <div class="flex items-center space-x-3">
-                    <i class="fas fa-users"></i>
-                    <span>Network with professionals</span>
-                </div>
-                <div class="flex items-center space-x-3">
-                    <i class="fas fa-calendar-check"></i>
-                    <span>Schedule & manage interviews</span>
-                </div>
-                <div class="flex items-center space-x-3">
-                    <i class="fas fa-star"></i>
-                    <span>Evaluate top talent</span>
-                </div>
-            </div>
-
-            <div class="text-sm text-indigo-100">
-                <a href="#" class="hover:text-white">Privacy Policy</a> • 
-                <a href="#" class="hover:text-white">Terms</a> • 
-                <a href="#" class="hover:text-white">Help</a>
-            </div>
-        </div>
-
-        <!-- Right Side - Sign Up Form -->
-        <div class="w-2/3 p-8 overflow-hidden flex flex-col">
-            <div class="mb-6">
-                <h2 class="text-2xl font-bold text-gray-800">Create Interviewer Account</h2>
-                <p class="text-gray-600">Fill in your details to get started</p>
-            </div>
-
-            <form method="post" class="flex-1 grid grid-cols-2 gap-4 auto-rows-min">
-                {% csrf_token %}
-
-                {% for field in form %}
-                <div class="{% if field.name in 'bio,about,description' %}col-span-2{% endif %}">
-                    <label for="{{ field.id_for_label }}" class="block text-sm font-medium text-gray-700 mb-1">
-                        {{ field.label }}
-                    </label>
-                    <div class="relative">
-                        {{ field }}
-                        {% if field.errors %}
-                        <div class="absolute inset-y-0 right-0 flex items-center pr-3">
-                            <i class="fas fa-exclamation-circle text-red-500"></i>
-                        </div>
-                        {% endif %}
-                    </div>
-                    {% if field.errors %}
-                    <p class="mt-1 text-xs text-red-600">{{ field.errors|join:", " }}</p>
-                    {% endif %}
-                </div>
-                {% endfor %}
-
-                <div class="col-span-2 flex items-center justify-between mt-4">
-                    <button type="submit" class="bg-indigo-600 text-white py-2 px-6 rounded-lg font-medium hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transform transition-all duration-200">
-                        Create Account
-                    </button>
-                    
-                    <div class="text-gray-600">
-                        Already have an account? 
-                        <a href="{% url 'interviewer_login' %}" class="text-indigo-600 hover:text-indigo-800 font-medium">
-                            Sign in
-                        </a>
-                    </div>
-                </div>
-            </form>
-        </div>
-    </div>
-
     <style>
-        /* Form Input Styles */
-        input, 
-        select, 
-        textarea {
-            border: 1px solid #CBD5E0 !important;
-            @apply w-full px-3 py-2 rounded-lg;
-            @apply focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500;
+        /* Reset and Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #f0f4ff 0%, #e6eeff 100%);
+            color: #333;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        /* Navigation */
+        nav {
+            background-color: #0f766e; /* Deeper teal color */
+            color: white;
+            padding: 1rem 0;
+            box-shadow: 0 4px 12px rgba(15, 118, 110, 0.2);
+            position: relative;
+            font-family: 'Poppins', sans-serif; /* Modern, clean font */
         }
 
-        /* Autofill Styles */
+        .nav-container {
+            width: 100%;
+            padding: 0 2rem;
+            /* margin: 0 auto; */
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            color: white;
+            z-index: 5;
+        }
+
+        .logo-text {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-left: 0.5rem;
+            letter-spacing: 0.5px; /* Improved spacing */
+        }
+
+        .nav-links {
+            /* margin-right: 2rem; Adjust value as needed */
+            display: flex;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            margin-left: 1.5rem;
+            transition: all 0.3s;
+            font-weight: 500;
+            font-size: 0.95rem;
+            letter-spacing: 0.3px;
+            padding: 0.5rem 0.75rem;
+            border-radius: 4px;
+        }
+
+        .nav-links a:hover {
+            color: #ecfdf5; /* Light mint color on hover */
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .login-btn {
+            background-color: #f97316; /* Orange accent */
+            padding: 0.5rem 1.25rem !important;
+            border-radius: 6px !important;
+            font-weight: 600 !important;
+            transition: all 0.3s;
+        }
+
+        .login-btn:hover {
+            background-color: #ea580c !important; /* Darker orange on hover */
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(249, 115, 22, 0.3);
+        }
+        
+        /* Hamburger Menu */
+        .hamburger {
+            display: none;
+            cursor: pointer;
+            width: 30px;
+            height: 21px;
+            position: relative;
+            z-index: 5;
+        }
+        
+        .hamburger span {
+            display: block;
+            position: absolute;
+            height: 3px;
+            width: 100%;
+            background: white;
+            border-radius: 3px;
+            opacity: 1;
+            left: 0;
+            transform: rotate(0deg);
+            transition: .25s ease-in-out;
+        }
+        
+        .hamburger span:nth-child(1) {
+            top: 0px;
+        }
+        
+        .hamburger span:nth-child(2) {
+            top: 9px;
+        }
+        
+        .hamburger span:nth-child(3) {
+            top: 18px;
+        }
+        
+        .hamburger.open span:nth-child(1) {
+            top: 9px;
+            transform: rotate(135deg);
+        }
+        
+        .hamburger.open span:nth-child(2) {
+            opacity: 0;
+            left: -60px;
+        }
+        
+        .hamburger.open span:nth-child(3) {
+            top: 9px;
+            transform: rotate(-135deg);
+        }
+        
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            max-width: 1200px;
+            margin: 0rem auto;
+            width: 100%;
+        }
+        
+        /* Form Container */
+        .container {
+            background: white;
+            border-radius: 0.75rem;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15);
+            width: 100%;
+            max-width: 1024px;
+            min-height: 600px;
+            display: flex;
+            overflow: hidden;
+            margin: 2rem 0;
+        }
+        
+        /* Left Banner */
+        .banner {
+            background-color: rgb(15, 118, 110); /* Changed to indigo theme */
+            width: 33.333%;
+            padding: 20px 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            color: white;
+        }
+        
+        .banner h1 {
+            font-size: 1.875rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+        
+        .banner p {
+            color: #e0e7ff; /* Light indigo for subtitle */
+        }
+        
+        .benefits {
+            margin: 1rem 0;
+        }
+        
+        .benefit-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+        
+        .benefit-item i {
+            margin-right: 0.75rem;
+            color: #f97316; /* Orange accent color */
+        }
+        
+        /* Form Section */
+        .form-section {
+            width: 66.667%;
+            padding: 2rem;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .form-header {
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-header h2 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #16a34a; /* Dark indigo for headings */
+        }
+        
+        .form-header p {
+            color: #4B5563;
+        }
+        
+        form {
+            flex: 1;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+            grid-auto-rows: min-content;
+        }
+        
+        .form-group {
+            margin-bottom: 0.5rem;
+        }
+        
+        .form-group.full-width {
+            grid-column: span 2;
+        }
+        
+        label {
+            display: block;
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: #374151;
+            margin-bottom: 0.25rem;
+        }
+        
+        .input-container {
+            position: relative;
+        }
+        
+        input, select, textarea {
+            width: 100%;
+            padding: 0.5rem 0.75rem;
+            border-radius: 0.5rem;
+            border: 1px solid #CBD5E0 !important;
+        }
+        
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: #4f46e5 !important; /* Indigo focus border */
+            box-shadow: 0 0 0 1px #4f46e5;
+        }
+        
         input:-webkit-autofill,
         input:-webkit-autofill:hover,
         input:-webkit-autofill:focus,
@@ -102,14 +276,384 @@
             -webkit-box-shadow: 0 0 0 30px white inset !important;
             border: 1px solid #CBD5E0 !important;
         }
-
+        
+        textarea {
+            height: 5rem;
+            resize: none;
+        }
+        
+        .error-icon {
+            position: absolute;
+            top: 50%;
+            right: 0.75rem;
+            transform: translateY(-50%);
+            color: #EF4444;
+        }
+        
+        .error-message {
+            margin-top: 0.25rem;
+            font-size: 0.75rem;
+            color: #EF4444;
+        }
+        
+        .form-actions {
+            grid-column: span 2;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-top: 1rem;
+        }
+        
+        button {
+            background-color: #22c55e; /* Indigo theme button */
+            color: white;
+            padding: 0.5rem 1.5rem;
+            border-radius: 0.5rem;
+            font-weight: 500;
+            border: none;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        button:hover {
+            background-color: #4338ca; /* Darker indigo on hover */
+        }
+        
+        button:focus {
+            outline: none;
+            box-shadow: 0 0 0 2px #e0e7ff, 0 0 0 4px #4f46e5; /* Indigo focus ring */
+        }
+        
+        .login-link {
+            color: #4B5563;
+        }
+        
+        .login-link a {
+            color: #f97316; /* Orange link - subtle change */
+            font-weight: 500;
+            text-decoration: none;
+        }
+        
+        .login-link a:hover {
+            color: #ea580c; /* Darker orange on hover */
+        }
+        
         /* Error State */
         .error input, 
         .error select, 
         .error textarea {
-            @apply border-red-500;
+            border-color: #EF4444 !important;
+        }
+
+        /* Footer */
+        footer {
+            background-color: #0f766e; /* Matches nav background */
+            color: white;
+            padding: 2rem;
+            text-align: center;
+            margin-top: auto;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            margin: 1rem 0;
+        }
+
+        .footer-links a {
+            color: #e0e7ff; /* Light indigo */
+            text-decoration: none;
+            margin: 0 1rem;
+            transition: color 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: #f97316;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .hamburger {
+                display: block;
+            }
+            
+            .nav-links {
+                position: fixed;
+                top: 0;
+                right: -100%;
+                width: 250px;
+                height: auto;
+                background-color: #4f46e5;
+                flex-direction: column;
+                align-items: flex-start;
+                padding: 80px 30px 30px;
+                transition: all 0.3s ease;
+                box-shadow: -5px 0 15px rgba(0, 0, 0, 0.1);
+                z-index: 4;
+                border-radius: 0 0 0 10px;
+                border-bottom: 3px solid #4338ca;
+                border-left: 3px solid #4338ca;
+            }
+            
+            .nav-links.open {
+                right: 0;
+            }
+            
+            .nav-links a {
+                margin: 0 0 1rem 0;
+                font-size: 1.2rem;
+                padding: 0.5rem 1rem;
+                width: 100%;
+                border-radius: 5px;
+                transition: all 0.3s;
+            }
+            
+            .nav-links a:hover {
+                background-color: rgba(255, 255, 255, 0.1);
+                transform: translateX(5px);
+            }
+            
+            .overlay {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background-color: rgba(0, 0, 0, 0.5);
+                z-index: 3;
+                opacity: 0;
+                visibility: hidden;
+                transition: all 0.3s;
+            }
+            
+            .overlay.active {
+                opacity: 1;
+                visibility: visible;
+            }
+            
+            .container {
+                flex-direction: column;
+                height: auto;
+            }
+            
+            .banner {
+                width: 100%;
+                padding: 1.5rem;
+            }
+            
+            .form-section {
+                width: 100%;
+                padding: 1.5rem;
+            }
+            
+            form {
+                grid-template-columns: 1fr;
+            }
+            
+            .form-group.full-width {
+                grid-column: span 1;
+            }
+            
+            .form-actions {
+                grid-column: span 1;
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 1rem;
+            }
+            
+            button {
+                width: 100%;
+            }
+            
+            .login-link {
+                width: 100%;
+                text-align: center;
+                margin-top: 0.5rem;
+            }
         }
     </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-container">
+            <a href="/" class="logo">
+                <span class="logo-text">InsightHire</span>
+            </a>
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            <div class="nav-links">
+                <a href="/candidates/">For Candidates</a>
+                <a href="/interviewers/">For Recruiters</a>
+                <a href="/about/">About</a>
+                <a href="/login/" class="login-btn">Login</a>
+            </div>
+        </div>
+    </nav>
 
+    <!-- Main Content -->
+    <div class="main-content">
+        <div class="container">
+            <!-- Left Side - Welcome Banner -->
+            <div class="banner">
+                <div>
+                    <div class="logo">
+                        <span class="logo-text">InsightHire</span>
+                    </div>
+                    <h1>Join as an Interviewer</h1>
+                    <p>Connect with top candidates and help shape the future of talent.</p>
+                </div>
+                
+                <div class="benefits">
+                    <div class="benefit-item">
+                        <i class="fas fa-users"></i>
+                        <span>Network with professionals</span>
+                    </div>
+                    <div class="benefit-item">
+                        <i class="fas fa-calendar-check"></i>
+                        <span>Schedule & manage interviews</span>
+                    </div>
+                    <div class="benefit-item">
+                        <i class="fas fa-star"></i>
+                        <span>Evaluate top talent</span>
+                    </div>
+                    <div class="benefit-item">
+                        <i class="fas fa-chart-line"></i>
+                        <span>Access AI interview insights</span>
+                    </div>
+                </div>
+
+                <div class="footer-links">
+                    <a href="/privacy/">Privacy Policy</a> • 
+                    <a href="/terms/">Terms</a> • 
+                    <a href="/contact/">Help</a>
+                </div>
+            </div>
+
+            <!-- Right Side - Sign Up Form -->
+            <div class="form-section">
+                <div class="form-header">
+                    <h2>Create Interviewer Account</h2>
+                    <p>Fill in your details to get started with InsightHire</p>
+                </div>
+
+                <form method="post">
+                    {% csrf_token %}
+                    
+                    <!-- Form fields based on Django form -->
+                    {% for field in form %}
+                    <div class="form-group {% if field.name in 'bio,about,description' %}full-width{% endif %}">
+                        <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                        <div class="input-container">
+                            {{ field }}
+                            {% if field.errors %}
+                            <div class="error-icon">
+                                <i class="fas fa-exclamation-circle"></i>
+                            </div>
+                            {% endif %}
+                        </div>
+                        {% if field.errors %}
+                        <p class="error-message">{{ field.errors|join:", " }}</p>
+                        {% endif %}
+                    </div>
+                    {% endfor %}
+
+                    <div class="form-actions">
+                        <button type="submit">
+                            Create Account
+                        </button>
+                        
+                        <div class="login-link">
+                            Already have an account? 
+                            <a href="{% url 'interviewer_login' %}">
+                                Sign in
+                            </a>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <p>&copy; 2025 InsightHire. All rights reserved.</p>
+            <div class="footer-links">
+                <a href="/privacy/">Privacy Policy</a>
+                <a href="/terms/">Terms of Service</a>
+                <a href="/contact/">Contact Us</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript for hamburger menu -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const hamburger = document.querySelector('.hamburger');
+            const navLinks = document.querySelector('.nav-links');
+            const overlay = document.querySelector('.overlay');
+            let lastScrollTop = 0;
+            
+            // Function to close the menu
+            function closeMenu() {
+                hamburger.classList.remove('open');
+                navLinks.classList.remove('open');
+                overlay.classList.remove('active');
+                document.body.style.overflow = '';
+            }
+            
+            // Toggle menu when hamburger is clicked
+            hamburger.addEventListener('click', function(e) {
+                e.stopPropagation();
+                hamburger.classList.toggle('open');
+                navLinks.classList.toggle('open');
+                overlay.classList.toggle('active');
+                
+                if (navLinks.classList.contains('open')) {
+                    document.body.style.overflow = 'hidden';
+                } else {
+                    document.body.style.overflow = '';
+                }
+            });
+            
+            // Close menu when clicking on a link
+            const links = document.querySelectorAll('.nav-links a');
+            links.forEach(link => {
+                link.addEventListener('click', closeMenu);
+            });
+            
+            // Close menu when clicking outside
+            document.addEventListener('click', function(e) {
+                if (navLinks.classList.contains('open') && 
+                    !navLinks.contains(e.target) && 
+                    !hamburger.contains(e.target)) {
+                    closeMenu();
+                }
+            });
+            
+            // Close menu when overlay is clicked
+            overlay.addEventListener('click', closeMenu);
+            
+            // Close menu when scrolling
+            window.addEventListener('scroll', function() {
+                let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+                
+                if (Math.abs(scrollTop - lastScrollTop) > 10 && navLinks.classList.contains('open')) {
+                    closeMenu();
+                }
+                
+                lastScrollTop = scrollTop;
+            });
+        });
+    </script>
 </body>
 </html>
