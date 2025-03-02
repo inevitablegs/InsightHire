@@ -6,7 +6,12 @@
     <title>Interviewer Login | InsightHire</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/js/all.min.js"></script>
     <style>
-        /* Reset and Base Styles */
+        
+        :root {
+            --heading-color: #0369a1;         
+            --theme-color: #0369a1; 
+        }
+        
         * {
             margin: 0;
             padding: 0;
@@ -24,7 +29,7 @@
         
         /* Navigation */
         nav {
-            background-color: #0f766e; /* Deeper teal color */
+            background-color: var(--theme-color);
             color: white;
             padding: 1rem 0;
             box-shadow: 0 4px 12px rgba(15, 118, 110, 0.2);
@@ -337,7 +342,7 @@
         }
 
         footer {
-            background-color: #0f766e; /* Matches the nav background */
+            background-color: #0369a1; /* Matches the nav background */
             color: white;
             padding: 2rem;
             text-align: center;
@@ -472,10 +477,8 @@
                 <span></span>
             </div>
             <div class="nav-links">
-                <a href="/candidates/">For Candidates</a>
-                <a href="/interviewers/">For Recruiters</a>
-                <a href="/about/">About</a>
-                <a href="/login/" class="login-btn">Login</a>
+                <a href="/interviewers/">For Interviewers</a>
+                <a href="/interviewer/signup/" class="login-btn">Sign Up</a>
             </div>
         </div>
     </nav>
@@ -496,19 +499,19 @@
                 <div class="benefits">
                     <div class="benefit-item">
                         <i class="fas fa-calendar-check"></i>
-                        <span>Schedule candidate interviews</span>
+                        <span>&nbsp;Schedule candidate interviews</span>
                     </div>
                     <div class="benefit-item">
                         <i class="fas fa-brain"></i>
-                        <span>Generate AI-powered questions</span>
+                        <span>&nbsp;Generate AI-powered questions</span>
                     </div>
                     <div class="benefit-item">
                         <i class="fas fa-chart-line"></i>
-                        <span>Analyze interview responses</span>
+                        <span>&nbsp;Analyze interview responses</span>
                     </div>
                     <div class="benefit-item">
                         <i class="fas fa-users"></i>
-                        <span>Manage candidate pipeline</span>
+                        <span>&nbsp;Manage candidate pipeline</span>
                     </div>
                 </div>
 
@@ -573,11 +576,7 @@
                     </div>
                     {% endif %}
 
-                    <div class="form-group">
-                        <a href="/password-reset/" style="color: #f97316; text-decoration: none; font-size: 0.875rem;">
-                            Forgot your password?
-                        </a>
-                    </div>
+                    
 
                     <div class="form-actions">
                         <button type="submit">

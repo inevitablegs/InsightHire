@@ -492,11 +492,7 @@
             </div>
             <div class="nav-links">
                 <a href="/candidates/">For Candidates</a>
-                <a href="/interviewers/">For Recruiters</a>
-                <a href="/about/">About</a>
-                <a href="/login/" class="login-btn">Login</a>
-            <!-- </div>
-            <div class="overlay"></div> -->
+                <a href="/candidate/login/" class="login-btn">Login</a>
         </div>
     </nav>
 
@@ -516,19 +512,19 @@
                 <div class="benefits">
                     <div class="benefit-item">
                         <i class="fas fa-check-circle"></i>
-                        <span>Showcase your authentic skills</span>
+                        <span>&nbsp;Showcase your authentic skills</span>
                     </div>
                     <div class="benefit-item">
                         <i class="fas fa-check-circle"></i>
-                        <span>Get personalized feedback</span>
+                        <span>&nbsp;Get personalized feedback</span>
                     </div>
                     <div class="benefit-item">
                         <i class="fas fa-check-circle"></i>
-                        <span>Connect with top companies</span>
+                        <span>&nbsp;Connect with top companies</span>
                     </div>
                     <div class="benefit-item">
                         <i class="fas fa-check-circle"></i>
-                        <span>Access AI interview preparation</span>
+                        <span>&nbsp;Access AI interview preparation</span>
                     </div>
                 </div>
 
@@ -539,28 +535,23 @@
                 </div>
             </div>
 
-            <!-- Right Side - Sign Up Form -->
             <div class="form-section">
                 <div class="form-header">
                     <h2>Create Candidate Account</h2>
                     <p>Fill in your information to get started with InsightHire</p>
                 </div>
-
+            
                 <form method="post">
                     {% csrf_token %}
                     
-                    <!-- Sample form fields since we don't have the actual Django form -->
                     <div class="form-group">
-                        <label for="first_name">First Name</label>
+                        <label for="username">Username</label>
                         <div class="input-container">
-                            <input type="text" id="first_name" name="first_name" required>
-                        </div>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="last_name">Last Name</label>
-                        <div class="input-container">
-                            <input type="text" id="last_name" name="last_name" required>
+                            <input type="text" id="username" name="username" required>
+                            {% if form.username.errors %}
+                            <i class="fas fa-exclamation-circle error-icon"></i>
+                            <div class="error-message">{{ form.username.errors }}</div>
+                            {% endif %}
                         </div>
                     </div>
                     
@@ -568,6 +559,50 @@
                         <label for="email">Email</label>
                         <div class="input-container">
                             <input type="email" id="email" name="email" required>
+                            {% if form.email.errors %}
+                            <i class="fas fa-exclamation-circle error-icon"></i>
+                            <div class="error-message">{{ form.email.errors }}</div>
+                            {% endif %}
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="password1">Password</label>
+                        <div class="input-container">
+                            <input type="password" id="password1" name="password1" required>
+                            {% if form.password1.errors %}
+                            <i class="fas fa-exclamation-circle error-icon"></i>
+                            <div class="error-message">{{ form.password1.errors }}</div>
+                            {% endif %}
+                        </div>
+                        {% if form.password1.help_text %}
+                        <small class="form-text text-muted">{{ form.password1.help_text }}</small>
+                        {% endif %}
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="password2">Confirm Password</label>
+                        <div class="input-container">
+                            <input type="password" id="password2" name="password2" required>
+                            {% if form.password2.errors %}
+                            <i class="fas fa-exclamation-circle error-icon"></i>
+                            <div class="error-message">{{ form.password2.errors }}</div>
+                            {% endif %}
+                        </div>
+                    </div>
+                    
+                    <!-- Additional Fields for Extended Profile Information -->
+                    <div class="form-group">
+                        <label for="first_name">First Name</label>
+                        <div class="input-container">
+                            <input type="text" id="first_name" name="first_name">
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="last_name">Last Name</label>
+                        <div class="input-container">
+                            <input type="text" id="last_name" name="last_name">
                         </div>
                     </div>
                     
@@ -575,20 +610,6 @@
                         <label for="phone">Phone Number</label>
                         <div class="input-container">
                             <input type="tel" id="phone" name="phone">
-                        </div>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="password">Password</label>
-                        <div class="input-container">
-                            <input type="password" id="password" name="password" required>
-                        </div>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="confirm_password">Confirm Password</label>
-                        <div class="input-container">
-                            <input type="password" id="confirm_password" name="confirm_password" required>
                         </div>
                     </div>
                     
@@ -619,7 +640,7 @@
                             <textarea id="bio" name="bio" placeholder="Tell us about your professional background"></textarea>
                         </div>
                     </div>
-
+            
                     <div class="form-actions">
                         <button type="submit">
                             Create Account
@@ -628,7 +649,7 @@
                         <div class="login-link">
                             Already have an account? 
                             <a href="/candidate/login/">
-                                Sign in
+                                Login
                             </a>
                         </div>
                     </div>

@@ -6,6 +6,12 @@
     <title>Interviewer Sign Up | InsightHire</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/js/all.min.js"></script>
     <style>
+        /* CSS Variables */
+        :root {
+            --heading-color: #0369a1;         
+            --theme-color: #0369a1; 
+        }
+        
         /* Reset and Base Styles */
         * {
             margin: 0;
@@ -24,7 +30,7 @@
         
         /* Navigation */
         nav {
-            background-color: #0f766e; /* Deeper teal color */
+            background-color: var(--theme-color);
             color: white;
             padding: 1rem 0;
             box-shadow: 0 4px 12px rgba(15, 118, 110, 0.2);
@@ -171,7 +177,7 @@
         
         /* Left Banner */
         .banner {
-            background-color: rgb(15, 118, 110); /* Changed to indigo theme */
+            background-color: var(--theme-color);
             width: 33.333%;
             padding: 20px 20px;
             display: flex;
@@ -187,7 +193,7 @@
         }
         
         .banner p {
-            color: #e0e7ff; /* Light indigo for subtitle */
+            color: #dbeafe; /* Light blue for subtitle */
         }
         
         .benefits {
@@ -221,7 +227,7 @@
         .form-header h2 {
             font-size: 1.5rem;
             font-weight: 700;
-            color: #16a34a; /* Dark indigo for headings */
+            color: var(--heading-color);
         }
         
         .form-header p {
@@ -265,8 +271,8 @@
         
         input:focus, select:focus, textarea:focus {
             outline: none;
-            border-color: #4f46e5 !important; /* Indigo focus border */
-            box-shadow: 0 0 0 1px #4f46e5;
+            border-color: #0ea5e9 !important; /* Blue focus border */
+            box-shadow: 0 0 0 1px #0ea5e9;
         }
         
         input:-webkit-autofill,
@@ -305,7 +311,7 @@
         }
         
         button {
-            background-color: #22c55e; /* Indigo theme button */
+            background-color: #0ea5e9; /* Blue theme button */
             color: white;
             padding: 0.5rem 1.5rem;
             border-radius: 0.5rem;
@@ -316,12 +322,12 @@
         }
         
         button:hover {
-            background-color: #4338ca; /* Darker indigo on hover */
+            background-color: #0369a1; /* Darker blue on hover */
         }
         
         button:focus {
             outline: none;
-            box-shadow: 0 0 0 2px #e0e7ff, 0 0 0 4px #4f46e5; /* Indigo focus ring */
+            box-shadow: 0 0 0 2px #dbeafe, 0 0 0 4px #0ea5e9; /* Blue focus ring */
         }
         
         .login-link {
@@ -347,7 +353,7 @@
 
         /* Footer */
         footer {
-            background-color: #0f766e; /* Matches nav background */
+            background-color: var(--theme-color);
             color: white;
             padding: 2rem;
             text-align: center;
@@ -366,7 +372,7 @@
         }
 
         .footer-links a {
-            color: #e0e7ff; /* Light indigo */
+            color: #dbeafe; /* Light blue color */
             text-decoration: none;
             margin: 0 1rem;
             transition: color 0.3s;
@@ -388,7 +394,7 @@
                 right: -100%;
                 width: 250px;
                 height: auto;
-                background-color: #4f46e5;
+                background-color: #0ea5e9;
                 flex-direction: column;
                 align-items: flex-start;
                 padding: 80px 30px 30px;
@@ -396,8 +402,8 @@
                 box-shadow: -5px 0 15px rgba(0, 0, 0, 0.1);
                 z-index: 4;
                 border-radius: 0 0 0 10px;
-                border-bottom: 3px solid #4338ca;
-                border-left: 3px solid #4338ca;
+                border-bottom: 3px solid #0369a1;
+                border-left: 3px solid #0369a1;
             }
             
             .nav-links.open {
@@ -491,10 +497,8 @@
                 <span></span>
             </div>
             <div class="nav-links">
-                <a href="/candidates/">For Candidates</a>
-                <a href="/interviewers/">For Recruiters</a>
-                <a href="/about/">About</a>
-                <a href="/login/" class="login-btn">Login</a>
+                <a href="/interviewers/">For Interviewers</a>
+                <a href="/interviewer/login/" class="login-btn">Login</a>
             </div>
         </div>
     </nav>
@@ -515,19 +519,19 @@
                 <div class="benefits">
                     <div class="benefit-item">
                         <i class="fas fa-users"></i>
-                        <span>Network with professionals</span>
+                        <span>&nbsp;Network with professionals</span>
                     </div>
                     <div class="benefit-item">
                         <i class="fas fa-calendar-check"></i>
-                        <span>Schedule & manage interviews</span>
+                        <span>&nbsp;Schedule & manage interviews</span>
                     </div>
                     <div class="benefit-item">
                         <i class="fas fa-star"></i>
-                        <span>Evaluate top talent</span>
+                        <span>&nbsp;Evaluate top talent</span>
                     </div>
                     <div class="benefit-item">
                         <i class="fas fa-chart-line"></i>
-                        <span>Access AI interview insights</span>
+                        <span>&nbsp;Access AI interview insights</span>
                     </div>
                 </div>
 
@@ -574,7 +578,7 @@
                         <div class="login-link">
                             Already have an account? 
                             <a href="{% url 'interviewer_login' %}">
-                                Sign in
+                                Login
                             </a>
                         </div>
                     </div>

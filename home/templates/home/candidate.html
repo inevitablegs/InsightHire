@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Candidate Login | InsightHire</title>
+    <title>InsightHire - For Candidates</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/js/all.min.js"></script>
     <style>
         /* Reset and Base Styles */
@@ -24,18 +24,17 @@
         
         /* Navigation */
         nav {
-            background-color: #0f766e; /* Deeper teal color */
+            background-color: #0f766e; /* Teal color from signup.html */
             color: white;
             padding: 1rem 0;
             box-shadow: 0 4px 12px rgba(15, 118, 110, 0.2);
             position: relative;
-            font-family: 'Poppins', sans-serif; /* Modern, clean font */
+            font-family: 'Poppins', sans-serif;
         }
 
         .nav-container {
             width: 100%;
             padding: 0 2rem;
-            /* margin: 0 auto; */
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -53,11 +52,10 @@
             font-size: 1.5rem;
             font-weight: 700;
             margin-left: 0.5rem;
-            letter-spacing: 0.5px; /* Improved spacing */
+            letter-spacing: 0.5px;
         }
 
         .nav-links {
-            /* margin-right: 2rem; Adjust value as needed */
             display: flex;
             align-items: center;
         }
@@ -75,7 +73,7 @@
         }
 
         .nav-links a:hover {
-            color: #ecfdf5; /* Light mint color on hover */
+            color: #ecfdf5;
             background-color: rgba(255, 255, 255, 0.1);
         }
 
@@ -88,7 +86,7 @@
         }
 
         .login-btn:hover {
-            background-color: #ea580c !important; /* Darker orange on hover */
+            background-color: #ea580c !important;
             transform: translateY(-2px);
             box-shadow: 0 4px 8px rgba(249, 115, 22, 0.3);
         }
@@ -152,198 +150,234 @@
             justify-content: center;
             padding: 2rem;
             max-width: 1200px;
-            margin: 0rem auto;
+            margin: 0 auto;
             width: 100%;
         }
         
-        /* Form Container */
+        /* Container */
         .container {
             background: white;
             border-radius: 0.75rem;
             box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15);
             width: 100%;
             max-width: 1024px;
-            min-height: 600px;
-            display: flex;
-            overflow: hidden;
             margin: 2rem 0;
+            overflow: hidden; /* To ensure border-radius applies to children */
         }
         
-        /* Left Banner */
-        .banner {
-            background-color: rgb(15, 118, 110); /* Changed to green theme */
-            width: 33.333%;
-            padding: 20px 20px;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
+        /* Header with Banner Style */
+        .header {
+            background-color: #0f766e; /* Teal color */
             color: white;
+            padding: 2.5rem;
+            text-align: center;
         }
         
-        .banner h1 {
-            font-size: 1.875rem;
+        .header h1 {
+            font-size: 2.25rem;
             font-weight: 700;
             margin-bottom: 1rem;
         }
         
-        .banner p {
+        .header p {
             color: #dcfce7; /* Light green for subtitle */
+            font-size: 1.125rem;
+            max-width: 700px;
+            margin: 0 auto;
+            line-height: 1.6;
         }
         
-        .benefits {
-            margin: 1rem 0;
+        /* Content Section */
+        .content-section {
+            padding: 2.5rem;
         }
         
-        .benefit-item {
+        /* Benefit Row Structure */
+        .benefits-row {
+            display: flex;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+        
+        .benefit-card {
+            flex: 1;
+            min-width: 250px;
+            background: white;
+            border-radius: 0.5rem;
+            padding: 1.5rem;
+            margin: 0.75rem;
+            border: 1px solid #e2e8f0;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s;
+            display: flex;
+            align-items: flex-start;
+        }
+        
+        .benefit-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        }
+        
+        .benefit-icon {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 48px;
+            height: 48px;
+            min-width: 48px;
+            background-color: rgba(15, 118, 110, 0.1);
+            color: #0f766e; /* Teal color */
+            border-radius: 12px;
+            margin-right: 1rem;
+            font-size: 1.5rem;
+        }
+        
+        .benefit-content {
+            flex: 1;
+        }
+        
+        .benefit-card h3 {
+            color: #0f766e; /* Teal color */
+            margin-bottom: 0.75rem;
+            font-size: 1.25rem;
+        }
+        
+        .benefit-card p {
+            color: #4B5563;
+            line-height: 1.6;
+        }
+        
+        /* Information Section */
+        .section {
+            margin-bottom: 2.5rem;
+            background: #f8fafc;
+            padding: 1.5rem;
+            border-radius: 0.5rem;
+            border-left: 4px solid #0f766e; /* Teal color */
+        }
+        
+        .section-title {
             display: flex;
             align-items: center;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #0f766e; /* Teal color */
             margin-bottom: 1rem;
         }
         
-        .benefit-item i {
+        .section-title i {
             margin-right: 0.75rem;
-            color: #f97316; /* Orange accent color */
+            color: #f97316; /* Orange accent */
         }
         
-        /* Form Section */
-        .form-section {
-            width: 66.667%;
-            padding: 2rem;
-            overflow: hidden;
-            display: flex;
-            flex-direction: column;
-        }
-        
-        .form-header {
-            margin-bottom: 1.5rem;
-        }
-        
-        .form-header h2 {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: #16a34a; /* Dark green for headings */
-        }
-        
-        .form-header p {
+        .section-content {
             color: #4B5563;
+            line-height: 1.6;
         }
         
-        form {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
+        .section-content ul {
+            margin-top: 1rem;
+            margin-left: 1.5rem;
         }
         
-        .form-group {
+        .section-content li {
             margin-bottom: 0.5rem;
-        }
-        
-        .form-group.full-width {
-            grid-column: span 2;
-        }
-        
-        label {
-            display: block;
-            font-size: 0.875rem;
-            font-weight: 500;
-            color: #374151;
-            margin-bottom: 0.25rem;
-        }
-        
-        .input-container {
             position: relative;
         }
         
-        input, select, textarea {
-            width: 100%;
-            padding: 0.5rem 0.75rem;
-            border-radius: 0.5rem;
-            border: 1px solid #CBD5E0 !important;
+        .section-content li::marker {
+            color: #f97316; /* Orange accent */
         }
         
-        input:focus, select:focus, textarea:focus {
-            outline: none;
-            border-color: #22c55e !important; /* Green focus border */
-            box-shadow: 0 0 0 1px #22c55e;
-        }
-        
-        input:-webkit-autofill,
-        input:-webkit-autofill:hover,
-        input:-webkit-autofill:focus,
-        input:-webkit-autofill:active {
-            -webkit-box-shadow: 0 0 0 30px white inset !important;
-            border: 1px solid #CBD5E0 !important;
-        }
-        
-        .error-icon {
-            position: absolute;
-            top: 50%;
-            right: 0.75rem;
-            transform: translateY(-50%);
-            color: #EF4444;
-        }
-        
-        .error-message {
-            margin-top: 0.25rem;
-            font-size: 0.75rem;
-            color: #EF4444;
-        }
-        
-        .form-actions {
+        /* Help Section */
+        .help-container {
             display: flex;
             align-items: center;
-            justify-content: space-between;
-            margin-top: 1rem;
+            background-color: #ecfdf5; /* Light green background */
+            border-radius: 0.5rem;
+            padding: 1.5rem;
+            margin-top: 2.5rem;
+            border: 1px solid #dcfce7;
         }
         
-        button {
-            background-color: #22c55e; /* Green theme button */
-            color: white;
-            padding: 0.5rem 1.5rem;
-            border-radius: 0.5rem;
+        .help-content {
+            flex: 1;
+        }
+        
+        .help-content h3 {
+            color: #0f766e; /* Teal color */
+            margin-bottom: 0.5rem;
+            font-size: 1.25rem;
+            display: flex;
+            align-items: center;
+        }
+        
+        .help-content h3 i {
+            margin-right: 0.75rem;
+            color: #f97316; /* Orange accent */
+        }
+        
+        .help-content p {
+            color: #4B5563;
+            line-height: 1.6;
+            margin-bottom: 0.5rem;
+        }
+        
+        .help-content a {
+            color: #f97316; /* Orange accent */
+            text-decoration: none;
             font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        .help-content a:hover {
+            color: #ea580c;
+            text-decoration: underline;
+        }
+        
+        .help-icon {
+            font-size: 3rem;
+            color: #0f766e; /* Teal color */
+            margin-left: 2rem;
+        }
+        
+        /* CTA Section */
+        .cta-container {
+            text-align: center;
+            margin: 2rem 0;
+        }
+        
+        .cta-button {
+            background-color: #22c55e; /* Green button from signup */
+            color: white;
+            padding: 0.75rem 1.75rem;
+            border-radius: 0.5rem;
+            font-weight: 600;
             border: none;
             cursor: pointer;
-            transition: all 0.2s;
-        }
-        
-        button:hover {
-            background-color: #16a34a; /* Darker green on hover */
-        }
-        
-        button:focus {
-            outline: none;
-            box-shadow: 0 0 0 2px #dcfce7, 0 0 0 4px #22c55e; /* Green focus ring */
-        }
-        
-        .signup-link {
-            color: #4B5563;
-        }
-        
-        .signup-link a {
-            color: #f97316; /* Orange link - subtle change */
-            font-weight: 500;
+            transition: all 0.3s;
             text-decoration: none;
+            display: inline-block;
+            font-size: 1.125rem;
         }
         
-        .signup-link a:hover {
-            color: #ea580c; /* Darker orange on hover */
+        .cta-button:hover {
+            background-color: #16a34a; /* Darker green on hover */
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(34, 197, 94, 0.3);
         }
         
-        /* Error State */
-        .error input, 
-        .error select, 
-        .error textarea {
-            border-color: #EF4444 !important;
+        .cta-button i {
+            margin-right: 0.5rem;
         }
-
+        
+        /* Footer */
         footer {
-        background-color: #0f766e; /* Matches the nav background */
-        color: white;
-        padding: 2rem;
-        text-align: center;
-        margin-top: auto;
+            background-color: #0f766e; /* Teal color */
+            color: white;
+            padding: 2rem;
+            text-align: center;
+            margin-top: auto;
         }
         
         .footer-content {
@@ -358,14 +392,14 @@
         }
         
         .footer-links a {
-            color: #dcfce7; /* Tailwind green-100 */
+            color: #dcfce7; /* Light green */
             text-decoration: none;
             margin: 0 1rem;
             transition: color 0.3s;
         }
         
         .footer-links a:hover {
-            color: #f97316; /* Tailwind orange-500 */
+            color: #f97316; /* Orange accent */
         }
         
         /* Responsive Design */
@@ -380,7 +414,7 @@
                 right: -100%;
                 width: 250px;
                 height: auto;
-                background-color: #22c55e;
+                background-color: #22c55e; /* Green theme */
                 flex-direction: column;
                 align-items: flex-start;
                 padding: 80px 30px 30px;
@@ -428,35 +462,21 @@
                 visibility: visible;
             }
             
-            .container {
+            .benefits-row {
                 flex-direction: column;
-                height: auto;
             }
             
-            .banner {
-                width: 100%;
-                padding: 1.5rem;
+            .benefit-card {
+                margin: 0.75rem 0;
             }
             
-            .form-section {
-                width: 100%;
-                padding: 1.5rem;
-            }
-            
-            .form-actions {
+            .help-container {
                 flex-direction: column;
-                align-items: flex-start;
-                gap: 1rem;
-            }
-            
-            button {
-                width: 100%;
-            }
-            
-            .signup-link {
-                width: 100%;
                 text-align: center;
-                margin-top: 0.5rem;
+            }
+            
+            .help-icon {
+                margin: 1rem 0 0 0;
             }
         }
     </style>
@@ -474,8 +494,7 @@
                 <span></span>
             </div>
             <div class="nav-links">
-                <a href="/candidates/">For Candidates</a>
-                <a href="/candidate/signup/" class="login-btn">Sign Up</a>
+                <a href="/candidate/signup" class="login-btn">Sign Up</a>
             <!-- </div>
             <div class="overlay"></div> -->
         </div>
@@ -484,86 +503,91 @@
     <!-- Main Content -->
     <div class="main-content">
         <div class="container">
-            <!-- Left Side - Welcome Banner -->
-            <div class="banner">
-                <div>
-                    <div class="logo">
-                        <span class="logo-text">InsightHire</span>
-                    </div>
-                    <h1>Welcome Back!</h1>
-                    <p>Log in to access your AI-powered interview insights and career opportunities.</p>
-                </div>
-                
-                <div class="benefits">
-                    <div class="benefit-item">
-                        <i class="fas fa-lock"></i>
-                        <span>&nbsp;Secure Account Access</span>
-                    </div>
-                    <div class="benefit-item">
-                        <i class="fas fa-user-check"></i>
-                        <span>&nbsp;Personalized Dashboard</span>
-                    </div>
-                    <div class="benefit-item">
-                        <i class="fas fa-briefcase"></i>
-                        <span>&nbsp;Job Matches & Recommendations</span>
-                    </div>
-                    <div class="benefit-item">
-                        <i class="fas fa-robot"></i>
-                        <span>&nbsp;AI Interview Practice Tools</span>
-                    </div>
-                </div>
-
-                <div class="footer-links">
-                    <a href="/privacy/">Privacy Policy</a> • 
-                    <a href="/terms/">Terms</a> • 
-                    <a href="/contact/">Help</a>
-                </div>
+            <!-- Header in Banner Style -->
+            <div class="header">
+                <h1>Accelerate Your Career</h1>
+                <p>Improve your interview performance with AI-driven feedback and personalized insights to help you stand out in the hiring process.</p>
             </div>
 
-            <!-- Right Side - Login Form -->
-            <div class="form-section">
-                <div class="form-header">
-                    <h2>Sign In to Your Account</h2>
-                    <p>Enter your credentials to access your InsightHire dashboard</p>
+            <!-- Content Section -->
+            <div class="content-section">
+                <!-- Benefits in Row Structure -->
+                <div class="benefits-row">
+                    <div class="benefit-card">
+                        <div class="benefit-icon">
+                            <i class="fas fa-brain"></i>
+                        </div>
+                        <div class="benefit-content">
+                            <h3>AI-Powered Feedback</h3>
+                            <p>Receive objective, data-driven insights on your engagement, confidence, and communication skills during interviews.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="benefit-card">
+                        <div class="benefit-icon">
+                            <i class="fas fa-comments"></i>
+                        </div>
+                        <div class="benefit-content">
+                            <h3>Personalized Questions</h3>
+                            <p>Practice with AI-generated interview questions tailored to your specific industry, role, and experience level.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="benefits-row">
+                    <div class="benefit-card">
+                        <div class="benefit-icon">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                        <div class="benefit-content">
+                            <h3>Performance Analytics</h3>
+                            <p>Track your progress over time with detailed analytics and identify areas for improvement in your interview skills.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="benefit-card">
+                        <div class="benefit-icon">
+                            <i class="fas fa-balance-scale"></i>
+                        </div>
+                        <div class="benefit-content">
+                            <h3>Fair Assessment</h3>
+                            <p>Experience an unbiased hiring process that focuses on your skills and potential rather than unconscious biases.</p>
+                        </div>
+                    </div>
                 </div>
 
-                <form method="post">
-                    {% csrf_token %}
-                    
-                    {% for field in form %}
-                    <div class="form-group">
-                        <label for="{{ field.id_for_label }}">
-                            {{ field.label }}
-                        </label>
-                        <div class="input-container">
-                            {{ field }}
-                            {% if field.errors %}
-                            <div class="error-icon">
-                                <i class="fas fa-exclamation-circle"></i>
-                            </div>
-                            {% endif %}
-                        </div>
-                        {% if field.errors %}
-                        <p class="error-message">{{ field.errors|join:", " }}</p>
-                        {% endif %}
+                <!-- Information Section -->
+                <div class="section">
+                    <h2 class="section-title"><i class="fas fa-info-circle"></i> How It Works</h2>
+                    <div class="section-content">
+                        <p>InsightHire uses advanced AI technology to analyze your interview performance and provide actionable feedback to help you improve. Our platform offers:</p>
+                        <ul>
+                            <li>Video analysis that measures engagement, confidence, and stress levels</li>
+                            <li>Real-time feedback on your communication style and body language</li>
+                            <li>Personalized improvement recommendations based on your performance</li>
+                            <li>Practice sessions with industry-specific questions and scenarios</li>
+                        </ul>
                     </div>
-                    {% endfor %}
+                </div>
 
-                    
+                <!-- CTA Section -->
+                <div class="cta-container">
+                    <a href="/candidate/signup/" class="cta-button">
+                        <i class="fas fa-user-plus"></i> Create Account
+                    </a>
+                </div>
 
-                    <div class="form-actions">
-                        <button type="submit">
-                            Login
-                        </button>
-                        
-                        <div class="signup-link">
-                            Don't have an account? 
-                            <a href="/candidate/signup/">
-                                Sign up here
-                            </a>
-                        </div>
+                <!-- Help Section -->
+                <div class="help-container">
+                    <div class="help-content">
+                        <h3><i class="fas fa-question-circle"></i> Need Assistance?</h3>
+                        <p>Our support team is ready to help you with any questions or issues you might encounter.</p>
+                        <p>Visit our <a href="/notfound/">help center</a> or email us at <strong>help@insighthire.com</strong></p>
                     </div>
-                </form>
+                    <div class="help-icon">
+                        <i class="fas fa-headset"></i>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
